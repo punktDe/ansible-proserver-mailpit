@@ -12,4 +12,3 @@
         nginx:
           prefix:
             config: /etc/nginx
-        # Mock oauth2_proxy to avoid dependency issues if needed, or leave undefined to skip

@@ -1,0 +1,56 @@
+---
+argument_specs:
+  main:
+    short_description: "The main entry point for the mailpit role."
+    options:
+      mailpit:
+        type: dict
+        required: true
+        description: "Mailpit configuration."
+        options:
+          domain:
+            type: str
+            required: false
+            description: "The domain name for the Mailpit UI. If not set, it defaults to the server's FQDN or IP."
+          use_dehydrated:
+            type: bool
+            default: true
+            description: "Whether to use dehydrated for Let's Encrypt SSL certificates."
+          nginx:
+            type: dict
+            description: "Nginx configuration for Mailpit."
+            options:
+              bind_addr:
+                type: list
+                elements: str
+                default:
+                  - "0.0.0.0"
+                  - "[::1]"
+                description: "List of IP addresses Nginx should listen on."
+          bind_addr:
+            type: str
+            default: "127.0.0.1"
+            description: "The IP address Mailpit should bind to (both UI and SMTP)."
+          smtp_port:
+            type: int
+            default: 1025
+            description: "The port Mailpit should listen on for SMTP traffic."
+          ui_port:
+            type: int
+            default: 8025
+            description: "The port Mailpit should listen on for the Web UI."
+          oauth2_proxy:
+            type: str
+            required: false
+            description: "Name of the oauth2_proxy instance to use for authentication (optional)."
+          install_dir:
+            type: str
+            default: "/opt/mailpit"
+            description: "Directory where Mailpit will be installed."
+          version:
+            type: str
+            default: "1.29.1"
+            description: "The version of Mailpit to install."
+          amd64_linux_url:
+            type: str
+            description: "Download URL for the Mailpit binary (Linux amd64). Generally auto-constructed."
