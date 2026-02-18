@@ -14,4 +14,3 @@ mailpit:
   version: 1.29.1
   amd64_linux_url: "https://github.com/axllent/mailpit/releases/download/v{{ mailpit.version }}/mailpit-linux-amd64.tar.gz"
   db_path: /var/lib/mailpit/mailpit.db
-
