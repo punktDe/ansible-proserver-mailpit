@@ -1,0 +1,11 @@
+[Unit]
+Description=Mailpit server
+
+[Service]
+ExecStart={{ mailpit.install_dir }}/mailpit -d {{ mailpit_db_path }} --listen {{ mailpit.bind_addr }}:{{ mailpit.ui_port }} --smtp {{ mailpit.bind_addr }}:{{ mailpit.smtp_port }}
+Restart=always
+RestartSec=10
+SyslogIdentifier=mailpit
+
+[Install]
+WantedBy=multi-user.target

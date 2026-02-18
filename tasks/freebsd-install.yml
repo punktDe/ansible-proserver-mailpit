@@ -1,0 +1,16 @@
+---
+- name: Configure the mailpit service
+  community.general.sysrc:
+    name: mailpit_args
+    value: "-d {{ mailpit_db_path }} --listen {{ mailpit.bind_addr }}:{{ mailpit.ui_port }} --smtp {{ mailpit.bind_addr }}:{{ mailpit.smtp_port }}"
+  notify: Restart Mailpit
+
+- name: Enable Mailpit service
+  community.general.sysrc:
+    name: mailpit_enable
+    value: "YES"
+
+- name: Ensure Mailpit is started
+  ansible.builtin.service:
+    name: mailpit
+    state: started

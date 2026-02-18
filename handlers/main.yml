@@ -1,0 +1,5 @@
+---
+- name: Restart Mailpit
+  ansible.builtin.service:
+    name: mailpit
+    state: restarted

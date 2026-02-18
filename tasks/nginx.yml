@@ -1,0 +1,8 @@
+---
+- name: Template nginx configuration
+  ansible.builtin.template:
+    src: "nginx.conf.j2"
+    dest: "{{ nginx.prefix.config }}/http.d/mailpit.conf"
+    mode: "0644"
+    owner: "root"
+  notify: Reload nginx
