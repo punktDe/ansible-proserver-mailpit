@@ -1,0 +1,15 @@
+---
+- name: Converge
+  hosts: all
+  environment:
+    GITHUB_ACTIONS: "maybe"
+    ANSIBLE_HASH_BEHAVIOUR: merge
+  tasks:
+    - name: "Include ansible-proserver-mailpit"
+      ansible.builtin.include_role:
+        name: "ansible-proserver-mailpit"
+      vars:
+        nginx:
+          prefix:
+            config: /etc/nginx
+        # Mock oauth2_proxy to avoid dependency issues if needed, or leave undefined to skip
