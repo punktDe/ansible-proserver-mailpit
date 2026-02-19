@@ -10,7 +10,7 @@ output_template: |
 
   Please edit meta/argument_specs.yml instead.
   -->
-  # {{ role }}
+  # {{ metadata.galaxy_info.role_name }}
 
   {{ metadata.galaxy_info.description }}
 
@@ -88,7 +88,7 @@ output_template: |
   Add this role to the requirements.yml of your playbook as follows:
   ```yaml
   roles:
-    - name: {{ role }}
+    - name: {{ metadata.galaxy_info.role_name }}
       src: https://github.com/punktDe/ansible-proserver-mailpit
   ```
 
@@ -99,7 +99,7 @@ output_template: |
   ```yaml
   - hosts: all
     roles:
-      - name: mailpit
+      - name: {{ metadata.galaxy_info.role_name }}
   ```
 
   <!-- END_ANSIBLE_DOCS -->

@@ -1,13 +1,17 @@
 ---
-- name: disable maildev
+- name: Disable maildev
   ansible.builtin.include_tasks: disable-maildev.yml
-  when: ansible_facts['system'] == 'Linux'
-  tags: disable-mailhog-dev
+  when: 
+    - ansible_facts['system'] == 'Linux'
+    - "'disable-maildev' in ansible_run_tags"
+  tags: disable-maildev
 
 - name: disable mailhog
   ansible.builtin.include_tasks: disable-mailhog.yml
-  when: ansible_facts['os_family'] == 'FreeBSD'
-  tags: disable-mailhog-dev
+  when: 
+    - ansible_facts['os_family'] == 'FreeBSD'
+    - "'disable-mailhog' in ansible_run_tags"
+  tags: disable-mailhog
 
 - name: Include dehydrated dependency
   ansible.builtin.include_role:

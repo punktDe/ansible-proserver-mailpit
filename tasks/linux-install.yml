@@ -21,7 +21,7 @@
   ansible.builtin.unarchive:
     src: "{{ mailpit.download_url }}"
     dest: "{{ mailpit.install_dir }}"
-    remote_src: yes
+    remote_src: true
     mode: 0755
   when: >
     mailpit_current_version.rc != 0 or
@@ -42,5 +42,5 @@
 - name: Start and enable the mailpit systemd service
   ansible.builtin.service:
     name: mailpit
-    state: "{{ 'started' if mailpit.enable else 'stopped' }}"
-    enabled: "{{ mailpit.enable }}"
+    state: started
+    enabled: true

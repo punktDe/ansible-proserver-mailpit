@@ -6,7 +6,7 @@ This file is generated automatically by aar-doc and will be overwritten.
 
 Please edit meta/argument_specs.yml instead.
 -->
-# ansible-proserver-mailpit
+# mailpit
 
 mailpit role for Proserver
 
@@ -56,7 +56,7 @@ None.
 Add this role to the requirements.yml of your playbook as follows:
 ```yaml
 roles:
-  - name: ansible-proserver-mailpit
+  - name: mailpit
     src: https://github.com/punktDe/ansible-proserver-mailpit
 ```
 

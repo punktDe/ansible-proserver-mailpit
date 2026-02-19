@@ -26,6 +26,7 @@ argument_specs:
               enable:
                 type: bool
                 default: true
+                description: "Whether to configure Nginx as a reverse proxy for Mailpit."
               bind_addr:
                 type: list
                 elements: str
