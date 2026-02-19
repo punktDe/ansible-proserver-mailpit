@@ -1,28 +1,43 @@
 ---
-- name: Set OS dependent variables
-  ansible.builtin.set_fact:
-    mailpit_db_path: "{{ '/var/lib/mailpit/mailpit.db' if ansible_facts['os_family'] == 'Debian' else '/var/db/mailpit/mailpit.db' }}"
-    mailpit_arch: "{{ 'amd64' if ansible_architecture == 'x86_64' else 'arm64' }}"
+- name: Disable maildev
+  ansible.builtin.include_tasks: disable-maildev.yml
+  when:
+    - ansible_facts['system'] == 'Linux'
+    - "'disable-maildev' in ansible_run_tags"
+  tags: disable-maildev
+
+- name: disable mailhog
+  ansible.builtin.include_tasks: disable-mailhog.yml
+  when:
+    - ansible_facts['os_family'] == 'FreeBSD'
+    - "'disable-mailhog' in ansible_run_tags"
+  tags: disable-mailhog
 
 - name: Include dehydrated dependency
   ansible.builtin.include_role:
     name: dehydrated
-  when: mailpit.use_dehydrated
+  when: mailpit.dehydrated.enable
+
+- name: Include nginx dependency
+  ansible.builtin.include_role:
+    name: nginx
+  when: mailpit.nginx.enable
 
 - name: Include oauth2_proxy dependency
   ansible.builtin.include_role:
     name: oauth2_proxy
   when: (mailpit.oauth2_proxy is defined and mailpit.oauth2_proxy != None)
 
-- name: Install and configure mailpit (Debian)
+- name: Install and configure mailpit (Linux)
   ansible.builtin.include_tasks:
-    file: debian-install.yml
-  when: ansible_facts['os_family'] == 'Debian'
+    file: linux-install.yml
+  when: ansible_facts['system'] == 'Linux'
 
 - name: Configure mailpit (FreeBSD)
   ansible.builtin.include_tasks:
-    file: freebsd-install.yml
+    file: freebsd-setup.yml
   when: ansible_facts['os_family'] == 'FreeBSD'
 
 - name: Configure Nginx for mailpit
   ansible.builtin.include_tasks: nginx.yml
+  when: mailpit.nginx.enable

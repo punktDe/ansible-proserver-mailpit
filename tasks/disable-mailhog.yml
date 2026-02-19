@@ -1,0 +1,20 @@
+---
+- name: Stop the mailhog service
+  ansible.builtin.service:
+    name: mailhog
+    state: stopped
+
+- name: Disable the mailhog service
+  community.general.sysrc:
+    name: mailhog_enable
+    value: "NO"
+
+- name: Remove mailhog config
+  ansible.builtin.file:
+    path: /usr/local/etc/rc.conf.d/mailhog
+    state: absent
+
+- name: Remove mailhog nginx config
+  ansible.builtin.file:
+    path: "{{ nginx.prefix.config }}/http.d/mailhog.conf"
+    state: absent

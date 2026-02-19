@@ -4,14 +4,16 @@
   gather_facts: false
   tasks:
     - name: Check if Mailpit service is running
-      ansible.builtin.command: systemctl status mailpit
+      ansible.builtin.service:
+        name: mailpit
+        state: started
+      check_mode: true
       register: service_status
-      changed_when: false
-      failed_when: false
 
-    - name: Verify service is active
+    - name: Verify service is enabled
       ansible.builtin.assert:
-        that: "'active (running)' in service_status.stdout"
+        that:
+          - "not service_status.changed"
 
     - name: Check Mailpit UI port (8025)
       ansible.builtin.wait_for:
@@ -24,3 +26,31 @@
         port: 1025
         host: 127.0.0.1
         timeout: 60
+
+    - name: Create test message
+      ansible.builtin.copy:
+        content: |
+          From: johndoe@example.com
+          To: freak@example.com
+          Subject: Test email
+
+          Haii >,,,<
+        dest: /tmp/test-message
+        mode: 0644
+
+    - name: Send an email via mailpit's sendmail
+      ansible.builtin.shell: "cat /tmp/test-message | /opt/mailpit/mailpit sendmail johndoe@example.com"
+      changed_when: false
+
+    - name: Retrieving messages from the Mailpit API
+      ansible.builtin.uri:
+        url: "http://localhost:8025/api/v1/messages"
+      register: result
+      until: result.status == 200
+      retries: 60
+      delay: 1
+
+    - name: Print the API result
+      ansible.builtin.debug:
+        msg: "{{ result }}"
+      when: result is defined
