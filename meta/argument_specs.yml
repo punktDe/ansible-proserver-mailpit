@@ -31,7 +31,7 @@ argument_specs:
                 type: list
                 elements: str
                 default:
-                  - "0.0.0.0"
+                  - "127.0.0.1"
                   - "[::1]"
                 description: "List of IP addresses Nginx should listen on."
           bind_addr:

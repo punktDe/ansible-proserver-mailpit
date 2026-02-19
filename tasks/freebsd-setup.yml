@@ -8,6 +8,7 @@
 - name: Enable Mailpit service
   community.general.sysrc:
     name: mailpit_enable
+    vaule: "YES"
 
 - name: Ensure Mailpit is started
   ansible.builtin.service:
