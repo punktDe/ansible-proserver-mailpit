@@ -8,9 +8,9 @@
 - name: Enable Mailpit service
   community.general.sysrc:
     name: mailpit_enable
-    value: "YES"
+    value: "{{ 'YES' if mailpit.enable else 'NO' }}"
 
 - name: Ensure Mailpit is started
   ansible.builtin.service:
     name: mailpit
-    state: started
+    state: "{{ 'started' if mailpit.enable else 'stopped' }}"

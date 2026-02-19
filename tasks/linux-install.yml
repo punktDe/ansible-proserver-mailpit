@@ -42,5 +42,5 @@
 - name: Start and enable the mailpit systemd service
   ansible.builtin.service:
     name: mailpit
-    state: started
-    enabled: yes
+    state: "{{ 'started' if mailpit.enable else 'stopped' }}"
+    enabled: "{{ mailpit.enable }}"

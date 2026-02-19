@@ -1,5 +1,6 @@
 ---
 mailpit:
+  enable: true
   domain:
   dehydrated:
     enable: false
