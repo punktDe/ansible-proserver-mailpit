@@ -4,14 +4,16 @@
   gather_facts: false
   tasks:
     - name: Check if Mailpit service is running
-      ansible.builtin.command: systemctl status mailpit
+      ansible.builtin.service:
+        name: mailpit
+        state: started
+      check_mode: yes
       register: service_status
-      changed_when: false
-      failed_when: false
 
-    - name: Verify service is active
+    - name: Verify service is enabled
       ansible.builtin.assert:
-        that: "'active (running)' in service_status.stdout"
+        that:
+          - "not service_status.changed"
 
     - name: Check Mailpit UI port (8025)
       ansible.builtin.wait_for:

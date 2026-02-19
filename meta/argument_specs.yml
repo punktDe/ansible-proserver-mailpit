@@ -11,15 +11,21 @@ argument_specs:
           domain:
             type: str
             required: false
-            description: "The domain name for the Mailpit UI. If not set, it defaults to the server's FQDN or IP."
-          use_dehydrated:
-            type: bool
-            default: true
-            description: "Whether to use dehydrated for Let's Encrypt SSL certificates."
+            description: "The domain name for the Mailpit UI. If not set, defaults to the server's FQDN or IP."
+          dehydrated:
+            type: dict
+            options:
+              enable:
+                type: bool
+                default: false
+                description: "Whether to use dehydrated for Let's Encrypt SSL certificates."
           nginx:
             type: dict
             description: "Nginx configuration for Mailpit."
             options:
+              enable:
+                type: bool
+                default: true
               bind_addr:
                 type: list
                 elements: str
@@ -30,7 +36,7 @@ argument_specs:
           bind_addr:
             type: str
             default: "127.0.0.1"
-            description: "The IP address Mailpit should bind to (both UI and SMTP)."
+            description: "The IP address Mailpit should bind for the UI and SMTP."
           smtp_port:
             type: int
             default: 1025
@@ -46,11 +52,16 @@ argument_specs:
           install_dir:
             type: str
             default: "/opt/mailpit"
-            description: "Directory where Mailpit will be installed."
+            description: "Directory where Mailpit will be installed (Linux only)"
           version:
             type: str
             default: "1.29.1"
-            description: "The version of Mailpit to install."
-          amd64_linux_url:
+            description: "The version of Mailpit to install (Linux only)"
+          download_url:
             type: str
-            description: "Download URL for the Mailpit binary (Linux amd64). Generally auto-constructed."
+            description: "Download URL for the Mailpit binary. Generally auto-constructed."
+            default: "https://github.com/axllent/mailpit/releases/download/v{{ mailpit.version }}/mailpit-{{ ansible_facts['system'] | lower }}-{{ 'arm64' if ansible_facts['architecture'] == 'aarch64' else 'amd64' }}.tar.gz"
+          db_path:
+            type: str
+            description: "Path for the mailpit sqlite-database"
+            default: "{{ '/var/lib/mailpit/mailpit.db' if ansible_facts['system'] == 'Linux' else '/var/db/mailpit/mailpit.db' }}"

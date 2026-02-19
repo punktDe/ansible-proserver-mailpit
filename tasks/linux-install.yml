@@ -7,16 +7,26 @@
 
 - name: Create database directory
   ansible.builtin.file:
-    path: "{{ mailpit_db_path | dirname }}"
+    path: "{{ mailpit.db_path | dirname }}"
     state: directory
     mode: 0755
 
+- name: Check current mailpit version
+  ansible.builtin.command: "{{ mailpit.install_dir }}/mailpit version"
+  register: mailpit_current_version
+  failed_when: false
+  changed_when: false
+
 - name: Install mailpit
   ansible.builtin.unarchive:
-    src: "https://github.com/axllent/mailpit/releases/download/v{{ mailpit.version }}/mailpit-linux-{{ mailpit_arch }}.tar.gz"
+    src: "{{ mailpit.download_url }}"
     dest: "{{ mailpit.install_dir }}"
     remote_src: yes
     mode: 0755
+  when: >
+    mailpit_current_version.rc != 0 or
+    mailpit.version not in mailpit_current_version.stdout
+  notify: Restart Mailpit
 
 - name: Template the systemd service
   ansible.builtin.template:
@@ -25,6 +35,9 @@
     owner: root
     group: root
     mode: 0644
+  notify:
+    - Reload Systemd
+    - Restart Mailpit
 
 - name: Start and enable the mailpit systemd service
   ansible.builtin.service:

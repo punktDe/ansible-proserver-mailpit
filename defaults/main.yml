@@ -1,8 +1,10 @@
 ---
 mailpit:
   domain:
-  use_dehydrated: yes
+  dehydrated:
+    enable: false
   nginx:
+    enable: true
     bind_addr:
       - "0.0.0.0"
       - "[::1]"
@@ -12,5 +14,5 @@ mailpit:
   oauth2_proxy:
   install_dir: /opt/mailpit
   version: 1.29.1
-  amd64_linux_url: "https://github.com/axllent/mailpit/releases/download/v{{ mailpit.version }}/mailpit-linux-amd64.tar.gz"
-  db_path: /var/lib/mailpit/mailpit.db
+  download_url: "https://github.com/axllent/mailpit/releases/download/v{{ mailpit.version }}/mailpit-{{ ansible_facts['system'] | lower }}-{{ 'arm64' if ansible_facts['architecture'] == 'aarch64' else 'amd64' }}.tar.gz"
+  db_path: "{{ '/var/lib/mailpit/mailpit.db' if ansible_facts['system'] == 'Linux' else '/var/db/mailpit/mailpit.db' }}"

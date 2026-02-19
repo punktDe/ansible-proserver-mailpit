@@ -50,7 +50,7 @@ server {
   {% endif %}
 
   include {{ nginx.prefix.config }}/include/letsencrypt.conf;
-  {% if mailpit.use_dehydrated %}
+  {% if mailpit.dehydrated.enable %}
   location / {
     return 301 https://$host$request_uri;
   }
@@ -64,7 +64,7 @@ server {
 
 }
 
-{% if mailpit.use_dehydrated and (dehydrated | cert_exists(mailpit.domain)) %}
+{% if mailpit.dehydrated.enable and (dehydrated | cert_exists(mailpit.domain)) %}
 server {
   {% for addr in mailpit.nginx.bind_addr %}
   listen {{ addr }}:443 ssl http2;

@@ -3,3 +3,7 @@
   ansible.builtin.service:
     name: mailpit
     state: restarted
+
+- name: Reload Systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
