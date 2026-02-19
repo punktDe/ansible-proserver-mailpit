@@ -42,7 +42,7 @@
       ansible.builtin.shell: "cat /tmp/test-message | /opt/mailpit/mailpit sendmail johndoe@example.com"
       changed_when: false
 
-    - name:  Retrieving messages from the Mailpit API
+    - name: Retrieving messages from the Mailpit API
       ansible.builtin.uri:
         url: "http://localhost:8025/api/v1/messages"
       register: result

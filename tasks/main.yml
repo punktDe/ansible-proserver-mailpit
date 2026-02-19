@@ -1,14 +1,14 @@
 ---
 - name: Disable maildev
   ansible.builtin.include_tasks: disable-maildev.yml
-  when: 
+  when:
     - ansible_facts['system'] == 'Linux'
     - "'disable-maildev' in ansible_run_tags"
   tags: disable-maildev
 
 - name: disable mailhog
   ansible.builtin.include_tasks: disable-mailhog.yml
-  when: 
+  when:
     - ansible_facts['os_family'] == 'FreeBSD'
     - "'disable-mailhog' in ansible_run_tags"
   tags: disable-mailhog
