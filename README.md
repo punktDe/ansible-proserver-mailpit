@@ -47,7 +47,7 @@ mailpit role for Proserver
 |Option|Description|Type|Required|Default|
 |---|---|---|---|---|
 | `enable` | Whether to configure Nginx as a reverse proxy for Mailpit. | bool | no | True |
-| `bind_addr` | List of IP addresses Nginx should listen on. | list of 'str' | no | ['0.0.0.0', '[::1]'] |
+| `bind_addr` | List of IP addresses Nginx should listen on. | list of 'str' | no | ['127.0.0.1', '[::1]'] |
 
 ## Dependencies
 None.
