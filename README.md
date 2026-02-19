@@ -33,7 +33,7 @@ mailpit role for Proserver
 | `oauth2_proxy` | Name of the oauth2_proxy instance to use for authentication (optional). | str | no |  |
 | `install_dir` | Directory where Mailpit will be installed (Linux only) | str | no | /opt/mailpit |
 | `version` | The version of Mailpit to install (Linux only) | str | no | 1.29.1 |
-| `download_url` | Download URL for the Mailpit binary. Generally auto-constructed. | str | no | https://github.com/axllent/mailpit/releases/download/v{{ mailpit.version }}/mailpit-{{ ansible_facts['system'] | ansible.builtin.lower }}-{{ internal.target_arch }}.tar.gz |
+| `download_url` | Download URL for the Mailpit binary. Generally auto-constructed. | str | no | https://github.com/axllent/mailpit/releases/download/v{{ mailpit.version }}/mailpit-{{ ansible_facts['system'] | lower }}-{{ 'arm64' if ansible_facts['architecture'] == 'aarch64' else 'amd64' }}.tar.gz |
 | `db_path` | Path for the mailpit sqlite-database | str | no | {{ '/var/lib/mailpit/mailpit.db' if ansible_facts['system'] == 'Linux' else '/var/db/mailpit/mailpit.db' }} |
 
 #### Options for `mailpit.dehydrated`
