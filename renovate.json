@@ -1,0 +1,25 @@
+{
+  "packageRules": [
+    {
+      "matchDepNames": ["mailpit"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "(^|/)defaults/main\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "\\s*version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "mailpit",
+      "datasourceTemplate": "github-tags",
+      "packageNameTemplate": "axllent/mailpit",
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+\\.\\d+)$"
+    }
+  ]
+}
