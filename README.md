@@ -40,7 +40,7 @@ mailpit role for Proserver
 
 |Option|Description|Type|Required|Default|
 |---|---|---|---|---|
-| `enable` | Whether to use dehydrated for Let's Encrypt SSL certificates. | bool | no | False |
+| `enable` | Whether to use dehydrated for Let's Encrypt SSL certificates. | bool | no | True |
 
 #### Options for `mailpit.nginx`
 
