@@ -32,7 +32,7 @@ mailpit role for Proserver
 | `ui_port` | The port Mailpit should listen on for the Web UI. | int | no | 8025 |
 | `oauth2_proxy` | Name of the oauth2_proxy instance to use for authentication (optional). | str | no |  |
 | `install_dir` | Directory where Mailpit will be installed (Linux only) | str | no | /opt/mailpit |
-| `version` | The version of Mailpit to install (Linux only) | str | no | 1.29.1 |
+| `version` | The version of Mailpit to install (Linux only). Automatically updated by Renovate bot. | str | no | {{ mailpit.version }} |
 | `download_url` | Download URL for the Mailpit binary. Generally auto-constructed. | str | no | https://github.com/axllent/mailpit/releases/download/v{{ mailpit.version }}/mailpit-{{ ansible_facts['system'] | lower }}-{{ 'arm64' if ansible_facts['architecture'] == 'aarch64' else 'amd64' }}.tar.gz |
 | `db_path` | Path for the mailpit sqlite-database | str | no | {{ '/var/lib/mailpit/mailpit.db' if ansible_facts['system'] == 'Linux' else '/var/db/mailpit/mailpit.db' }} |
 
