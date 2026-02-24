@@ -17,7 +17,7 @@ argument_specs:
             options:
               enable:
                 type: bool
-                default: false
+                default: true
                 description: "Whether to use dehydrated for Let's Encrypt SSL certificates."
           nginx:
             type: dict

@@ -4,6 +4,11 @@
     name: mailpit
     state: restarted
 
+- name: Reload nginx
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
+
 - name: Reload Systemd
   ansible.builtin.systemd:
     daemon_reload: true
