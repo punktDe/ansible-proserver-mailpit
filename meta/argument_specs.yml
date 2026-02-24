@@ -56,8 +56,8 @@ argument_specs:
             description: "Directory where Mailpit will be installed (Linux only)"
           version:
             type: str
-            default: "1.29.1"
-            description: "The version of Mailpit to install (Linux only)"
+            default: "{{ mailpit.version }}"
+            description: "The version of Mailpit to install (Linux only). Automatically updated by Renovate bot."
           download_url:
             type: str
             description: "Download URL for the Mailpit binary. Generally auto-constructed."

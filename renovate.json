@@ -1,9 +1,14 @@
 {
   "packageRules": [
     {
-      "matchDepNames": ["mailpit"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": false
+      "matchDepNames": [
+        "mailpit"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
     }
   ],
   "customManagers": [
