@@ -1,17 +1,18 @@
 ---
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
 - name: Disable maildev
   ansible.builtin.include_tasks: disable-maildev.yml
   when:
     - ansible_facts['system'] == 'Linux'
-    - "'disable-maildev' in ansible_run_tags"
-  tags: disable-maildev
+    - "'maildev' in services"
 
 - name: Disable mailhog
   ansible.builtin.include_tasks: disable-mailhog.yml
   when:
     - ansible_facts['os_family'] == 'FreeBSD'
-    - "'disable-mailhog' in ansible_run_tags"
-  tags: disable-mailhog
+    - "'maildev' in services"
 
 - name: Include dehydrated dependency
   ansible.builtin.include_role:
