@@ -1,13 +1,9 @@
 ---
-- name: Stop maildev docker container
-  community.docker.docker_container:
-    name: maildev
-    state: stopped
-
 - name: Disable maildev systemd service
   ansible.builtin.systemd_service:
     name: maildev
     enabled: false
+    state: stopped
 
 - name: Remove maildev nginx config
   ansible.builtin.file:
