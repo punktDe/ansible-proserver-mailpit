@@ -28,6 +28,7 @@ location = /proserver/iap/auth {
   {% endif %}
 
   proxy_pass http://{{ mailpit.bind_addr }}:{{ mailpit.ui_port }};
+  proxy_http_version 1.1;
   proxy_set_header Upgrade $http_upgrade;
   proxy_set_header Connection "upgrade";
   proxy_set_header Host $host;
