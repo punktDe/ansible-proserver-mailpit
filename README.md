@@ -53,7 +53,7 @@ mailpit role for Proserver
 - nginx
   - **Condition**: `mailpit.nginx.enable`
 - oauth2_proxy
-  - **Condition**: `(mailpit.oauth2_proxy is defined and mailpit.oauth2_proxy != None)`
+  - **Condition**: `mailpit.oauth2_proxy is defined and mailpit.oauth2_proxy is not none and (mailpit.oauth2_proxy | length) > 0`
 - dehydrated
   - **Condition**: `mailpit.dehydrated.enable`
 
