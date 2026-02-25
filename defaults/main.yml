@@ -2,7 +2,7 @@
 mailpit:
   domain:
   dehydrated:
-    enable: false
+    enable: true
   nginx:
     enable: true
     bind_addr:

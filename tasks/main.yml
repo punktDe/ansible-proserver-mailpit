@@ -6,28 +6,13 @@
   ansible.builtin.include_tasks: disable-maildev.yml
   when:
     - ansible_facts['system'] == 'Linux'
-    - "'maildev' in services"
+    - ansible_facts['services']['maildev.service']['status'] | default('not-found') != 'not-found'
 
 - name: Disable mailhog
   ansible.builtin.include_tasks: disable-mailhog.yml
   when:
     - ansible_facts['os_family'] == 'FreeBSD'
-    - "'maildev' in services"
-
-- name: Include dehydrated dependency
-  ansible.builtin.include_role:
-    name: dehydrated
-  when: mailpit.dehydrated.enable
-
-- name: Include nginx dependency
-  ansible.builtin.include_role:
-    name: nginx
-  when: mailpit.nginx.enable
-
-- name: Include oauth2_proxy dependency
-  ansible.builtin.include_role:
-    name: oauth2_proxy
-  when: (mailpit.oauth2_proxy is defined and mailpit.oauth2_proxy != None)
+    - ansible_facts['services']['mailhog']['status'] | default('not-found') != 'not-found'
 
 - name: Install and configure mailpit (Linux)
   ansible.builtin.include_tasks:

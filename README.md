@@ -40,7 +40,7 @@ mailpit role for Proserver
 
 |Option|Description|Type|Required|Default|
 |---|---|---|---|---|
-| `enable` | Whether to use dehydrated for Let's Encrypt SSL certificates. | bool | no | False |
+| `enable` | Whether to use dehydrated for Let's Encrypt SSL certificates. | bool | no | True |
 
 #### Options for `mailpit.nginx`
 
@@ -50,7 +50,12 @@ mailpit role for Proserver
 | `bind_addr` | List of IP addresses Nginx should listen on. | list of 'str' | no | ['127.0.0.1', '[::1]'] |
 
 ## Dependencies
-None.
+- nginx
+  - **Condition**: `mailpit.nginx.enable`
+- oauth2_proxy
+  - **Condition**: `mailpit.oauth2_proxy is defined and mailpit.oauth2_proxy is not none and (mailpit.oauth2_proxy | length) > 0`
+- dehydrated
+  - **Condition**: `mailpit.dehydrated.enable`
 
 ## Installation
 Add this role to the requirements.yml of your playbook as follows:

@@ -1,4 +1,12 @@
 ---
+dependencies:
+  - role: nginx
+    when: mailpit.nginx.enable
+  - role: oauth2_proxy
+    when: mailpit.oauth2_proxy is defined and mailpit.oauth2_proxy is not none and (mailpit.oauth2_proxy | length) > 0
+  - role: dehydrated
+    when: mailpit.dehydrated.enable
+
 galaxy_info:
   author: "punkt.de"
   license: "MIT"
