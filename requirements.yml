@@ -17,3 +17,5 @@ roles:
     src: https://github.com/punktDe/ansible-maildev
   - name: oauth2_proxy
     src: https://github.com/punktDe/ansible-proserver-oauth2-proxy
+  - name: supervisord
+    src: https://github.com/punktDe/ansible-proserver-supervisord
