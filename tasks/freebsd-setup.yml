@@ -1,15 +1,28 @@
 ---
-- name: Configure the mailpit service
-  community.general.sysrc:
-    name: mailpit_args
-    value: "-d {{ mailpit.db_path }} --listen {{ mailpit.bind_addr }}:{{ mailpit.ui_port }} --smtp {{ mailpit.bind_addr }}:{{ mailpit.smtp_port }}"
+- name: Create mailpit group
+  ansible.builtin.group:
+    name: mailpit
+    state: present
+    system: true
+
+- name: Create mailpit user
+  ansible.builtin.user:
+    name: mailpit
+    group: mailpit
+    system: true
+    create_home: false
+
+- name: Template mailpit rc.conf.d file
+  ansible.builtin.template:
+    src: mailpit.rc.conf.j2
+    dest: /usr/local/etc/rc.conf.d/mailpit
+    owner: root
+    group: wheel
+    mode: "0644"
   notify: Restart Mailpit
 
-- name: Enable Mailpit service
-  community.general.sysrc:
-    name: mailpit_enable
-    value: "YES"
-
-- name: Ensure Mailpit is started
+- name: Start and enable the mailpit service
   ansible.builtin.service:
     name: mailpit
+    state: started
+    enabled: true
