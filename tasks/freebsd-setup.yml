@@ -12,6 +12,14 @@
     system: true
     create_home: false
 
+- name: Create database directory
+  ansible.builtin.file:
+    path: "{{ mailpit.db_path | dirname }}"
+    state: directory
+    mode: 0750
+    owner: mailpit
+    group: mailpit
+
 - name: Template mailpit rc.conf.d file
   ansible.builtin.template:
     src: mailpit.rc.conf.j2
