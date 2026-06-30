@@ -2,6 +2,31 @@
 - name: Populate service facts
   ansible.builtin.service_facts:
 
+- name: Check whether the Mailpit binary is provided by the Proserver blueprint
+  ansible.builtin.stat:
+    path: /usr/local/bin/mailpit
+  register: mailpit_blueprint_binary
+  when: ansible_facts['os_family'] == 'FreeBSD'
+
+- name: Check whether the Mailpit service is provided by the Proserver blueprint
+  ansible.builtin.stat:
+    path: /usr/local/etc/rc.d/mailpit
+  register: mailpit_blueprint_service
+  when: ansible_facts['os_family'] == 'FreeBSD'
+
+- name: Verify that Mailpit is available from the Proserver blueprint
+  ansible.builtin.assert:
+    that:
+      - mailpit_blueprint_binary.stat.exists
+      - mailpit_blueprint_service.stat.exists
+      - mailpit_blueprint_service.stat.executable | default(false)
+    fail_msg: >-
+      Mailpit is not available in this jail's Proserver blueprint yet. Keep or
+      downgrade this jail to MailHog and wait for the Mailpit blueprint upgrade,
+      or contact team mOps.
+    quiet: true
+  when: ansible_facts['os_family'] == 'FreeBSD'
+
 - name: Disable maildev
   ansible.builtin.include_tasks: disable-maildev.yml
   when:
