@@ -1,0 +1,22 @@
+---
+- name: Check whether the Mailpit binary is provided by the Proserver blueprint
+  ansible.builtin.stat:
+    path: /usr/local/bin/mailpit
+  register: mailpit_blueprint_binary
+
+- name: Check whether the Mailpit service is provided by the Proserver blueprint
+  ansible.builtin.stat:
+    path: /usr/local/etc/rc.d/mailpit
+  register: mailpit_blueprint_service
+
+- name: Verify that Mailpit is available from the Proserver blueprint
+  ansible.builtin.assert:
+    that:
+      - mailpit_blueprint_binary.stat.exists
+      - mailpit_blueprint_service.stat.exists
+      - mailpit_blueprint_service.stat.executable | default(false)
+    fail_msg: >-
+      Mailpit is not available in this jail's Proserver blueprint yet. Keep or
+      downgrade this jail to MailHog and wait for the Mailpit blueprint upgrade,
+      or contact team mOps.
+    quiet: true

@@ -2,6 +2,10 @@
 - name: Populate service facts
   ansible.builtin.service_facts:
 
+- name: Verify the Proserver blueprint provides Mailpit
+  ansible.builtin.include_tasks: verify-mailpit-blueprint.yml
+  when: ansible_facts['os_family'] == 'FreeBSD'
+
 - name: Disable maildev
   ansible.builtin.include_tasks: disable-maildev.yml
   when:
