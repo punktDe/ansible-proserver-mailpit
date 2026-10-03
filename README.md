@@ -25,29 +25,29 @@ mailpit role for Proserver
 |Option|Description|Type|Required|Default|
 |---|---|---|---|---|
 | `domain` | The domain name for the Mailpit UI. If not set, defaults to the server's FQDN or IP. | str | no |  |
-| `dehydrated` |  | dict of 'dehydrated' options | no |  |
-| `nginx` | Nginx configuration for Mailpit. | dict of 'nginx' options | no |  |
-| `bind_addr` | The IP address Mailpit should bind for the UI and SMTP. | str | no | 127.0.0.1 |
-| `smtp_port` | The port Mailpit should listen on for SMTP traffic. | int | no | 1025 |
-| `ui_port` | The port Mailpit should listen on for the Web UI. | int | no | 8025 |
+| `dehydrated` |  | dict of `dehydrated` [options](#options-for-main--mailpit--dehydrated) | no |  |
+| `nginx` | Nginx configuration for Mailpit. | dict of `nginx` [options](#options-for-main--mailpit--nginx) | no |  |
+| `bind_addr` | The IP address Mailpit should bind for the UI and SMTP. | str | no | `127.0.0.1` |
+| `smtp_port` | The port Mailpit should listen on for SMTP traffic. | int | no | `1025` |
+| `ui_port` | The port Mailpit should listen on for the Web UI. | int | no | `8025` |
 | `oauth2_proxy` | Name of the oauth2_proxy instance to use for authentication (optional). | str | no |  |
-| `install_dir` | Directory where Mailpit will be installed (Linux only) | str | no | /opt/mailpit |
-| `version` | The version of Mailpit to install (Linux only). Automatically updated by Renovate bot. | str | no | {{ mailpit.version }} |
-| `download_url` | Download URL for the Mailpit binary. Generally auto-constructed. | str | no | https://github.com/axllent/mailpit/releases/download/v{{ mailpit.version }}/mailpit-{{ ansible_facts['system'] | lower }}-{{ 'arm64' if ansible_facts['architecture'] == 'aarch64' else 'amd64' }}.tar.gz |
-| `db_path` | Path for the mailpit sqlite-database | str | no | {{ '/var/lib/mailpit/mailpit.db' if ansible_facts['system'] == 'Linux' else '/var/db/mailpit/mailpit.db' }} |
+| `install_dir` | Directory where Mailpit will be installed (Linux only) | str | no | `/opt/mailpit` |
+| `version` | The version of Mailpit to install (Linux only). Automatically updated by Renovate bot. | str | no | `{{ mailpit.version }}` |
+| `download_url` | Download URL for the Mailpit binary. Generally auto-constructed. | str | no | `https://github.com/axllent/mailpit/releases/download/v{{ mailpit.version }}/mailpit-{{ ansible_facts['system'] | lower }}-{{ 'arm64' if ansible_facts['architecture'] == 'aarch64' else 'amd64' }}.tar.gz` |
+| `db_path` | Path for the mailpit sqlite-database | str | no | `{{ '/var/lib/mailpit/mailpit.db' if ansible_facts['system'] == 'Linux' else '/var/db/mailpit/mailpit.db' }}` |
 
 #### Options for `mailpit.dehydrated`
 
 |Option|Description|Type|Required|Default|
 |---|---|---|---|---|
-| `enable` | Whether to use dehydrated for Let's Encrypt SSL certificates. | bool | no | True |
+| `enable` | Whether to use dehydrated for Let's Encrypt SSL certificates. | bool | no | `True` |
 
 #### Options for `mailpit.nginx`
 
 |Option|Description|Type|Required|Default|
 |---|---|---|---|---|
-| `enable` | Whether to configure Nginx as a reverse proxy for Mailpit. | bool | no | True |
-| `bind_addr` | List of IP addresses Nginx should listen on. | list of 'str' | no | ['127.0.0.1', '[::1]'] |
+| `enable` | Whether to configure Nginx as a reverse proxy for Mailpit. | bool | no | `True` |
+| `bind_addr` | List of IP addresses Nginx should listen on. | list of `str` | no | `['127.0.0.1', '[::1]']` |
 
 ## Dependencies
 - nginx
